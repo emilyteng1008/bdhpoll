@@ -4,7 +4,34 @@ import csv
 
 
 class Question:
+    """ 
+    A class tha represents a question 
+
+    ...
+
+    Attributes 
+    ----------
+    choose_multiple : bool
+        a boolean that checks whether the question is multiple choice or single choice
+
+    title: str
+        the simplified name of the question (i.e., "Gender" is the title for question "What is your gender?" )
+    text: str
+        the question 
+
+    Choices : dict
+        a dictionary that where the key is a string of choice, value is a int of id (that counts from 0)
+        (i.e., {"Female" : 0, "Male" : 1, "Other": 2})
+
+    """
+
     def __init__(self, row):
+        """
+        Parameters 
+        ----------
+
+        row: a array of strings with choose_multiple, title, text, and choices
+        """
         self.choose_multiple = True if row[0].upper() == "TRUE" else False
         self.title = row[1]  # the generic name for ea. question
         self.text = row[2]  # the actual text of ea. question
@@ -25,11 +52,41 @@ print(test.text) """
 
 
 class Poll:
+    """
+    A class that represents all the questions and data  
+    
+    ...
+    Attributes 
+    ----------
+    
+    questionDictionary : dict
+        a dictionary with key that is an int (id that counts from 0) and value that is the class Question
+    
+    
+    data: dict 
+        a dictionary with key that is a tuple (a pair of ids that uniquely represent ea. question) 
+        value that is an array of arrays (a matrix with x,y label as choices of ea. question)
+    """
+
     def __init__(self, questionPath, dataPath):
+        """
+        Parameters
+        ---------
+        questionPath: csv file 
+            a file that stores all the poll questions 
+
+        dataPath: csv file 
+            a file that stores all the poll responses 
+        """
         self.questionDictionary = self.parseQuestions(questionPath)
         self.data = self.parseData(dataPath)
 
     def parseQuestions(self, questionsCSV):
+        """
+        returns a dictionary with all the poll questions parsed 
+
+        set i = -1  and if i != 1 to skip the first row of the csv file
+        """
         temp = {}
         with open(questionsCSV) as f:
             QUESTION_FILE = csv.reader(f)
@@ -41,6 +98,9 @@ class Poll:
         return temp
 
     def parseData(self, dataCSV):
+        """
+        returns a dictionary with all the responses parsed
+        """
         temp = {}
         for k1, v1 in self.questionDictionary.items():
             for k2, v2 in self.questionDictionary.items():
