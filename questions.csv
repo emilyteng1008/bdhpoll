@@ -5,7 +5,7 @@ FALSE,Financial Aid,What type of financial aid do you receive from Brown?,None,"
 FALSE,Sports,Are you currently on a varsity sports team?,Yes,No,,,,,,,,,,
 FALSE,Orientation,How would you describe your sexual orientation?,Heterosexual,Gay,Bisexual,Other,,,,,,,,
 TRUE,Race,Race/ethnicity? (check all that apply),White,Asian,Hispanic,Black,American Indian/Alaska Native,Native Hawaiian/Pacific Islander,Other,,,,,
-TRUE,Concentration,Concentration area(s):,Humanities/arts,Life sciences,"Physical sciences (incl. math, CS)",Social sciences (not incl. BEO or econ),Business (BEO or econ),,,,,,,
+TRUE,Concentration,Concentration area(s):,Humanities/arts,Life sciences,Physical sciences (incl. math and CS),Social sciences (not incl. BEO or econ),Business (BEO or econ),,,,,,,
 FALSE,Legacy,"Are you a ""legacy"" student (i.e. you have a parent, grandparent or sibling who attended Brown)?",Yes,No,,,,,,,,,,
 FALSE,FirstGen,Do you identify as a first-generation college student?,Yes,No,,,,,,,,,,
 FALSE,Domestic status,Were you a domestic or international applicant when you applied to Brown?,Domestic,International,,,,,,,,,,
