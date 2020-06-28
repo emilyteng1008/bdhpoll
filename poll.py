@@ -103,6 +103,8 @@ class Poll:
         returns a dictionary with all the responses parsed
 
         """
+        # create an empty dictionary, with key as a pair of index (counting from 0) that represent pair of question
+        # with value as an empty array with dimensions of no. of choices in the question
         temp = {}
         for k1, v1 in self.questionDictionary.items():
             for k2, v2 in self.questionDictionary.items():
@@ -124,7 +126,7 @@ class Poll:
                         # avoid repetitive pairs of questions (e.g., "race" and "gender" is the same as "gender" and "race")
                         if j >= i:
                             if self.questionDictionary[i].choose_multiple:
-                                # splits multiple choices into an array of strings and strips white spaces
+                                # split multiple choice responses into an array of strings and strip white spaces
                                 parsedResponse1 = map(
                                     lambda x: x.strip(), rawResponse1.split(",")
                                 )
@@ -136,6 +138,7 @@ class Poll:
                                 )
                             else:
                                 parsedResponse2 = [rawResponse2]
+                            # find the index of responses according to index of choices in self.questionDictionary
                             for choice1 in parsedResponse1:
                                 for choice2 in parsedResponse2:
                                     index1 = self.questionDictionary[i].choices[choice1]
