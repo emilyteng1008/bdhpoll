@@ -5,7 +5,7 @@ import csv
 
 class Question:
     """ 
-    A class tha represents a question 
+    A class that represents a question 
 
     ...
 
@@ -15,13 +15,14 @@ class Question:
         a boolean that checks whether the question is multiple choice or single choice
 
     title: str
-        the simplified name of the question (i.e., "Gender" is the title for question "What is your gender?" )
+        the simplified name of the question (e.g., "Gender" is the title for question "What is your gender?" )
+
     text: str
         the question 
 
     Choices : dict
         a dictionary that where the key is a string of choice, value is a int of id (that counts from 0)
-        (i.e., {"Female" : 0, "Male" : 1, "Other": 2})
+        (e.g., {"Female" : 0, "Male" : 1, "Other": 2})
 
     """
 
@@ -33,8 +34,8 @@ class Question:
         row: a array of strings with choose_multiple, title, text, and choices
         """
         self.choose_multiple = True if row[0].upper() == "TRUE" else False
-        self.title = row[1]  # the generic name for ea. question
-        self.text = row[2]  # the actual text of ea. question
+        self.title = row[1]
+        self.text = row[2]
         self.choices = {}
         for i in range(3, len(row)):
             if row[i] == "":
@@ -100,6 +101,7 @@ class Poll:
     def parseData(self, dataCSV):
         """
         returns a dictionary with all the responses parsed
+
         """
         temp = {}
         for k1, v1 in self.questionDictionary.items():
@@ -110,14 +112,19 @@ class Poll:
         with open(dataCSV) as f:
             DATA_FILE = csv.reader(f)
             isQuestion = False
+            # iterate over ea. row in the file
             for row in DATA_FILE:
+                # skip the first row in the file, because the questions start in second row
                 if isQuestion == False:
                     isQuestion = True
                     continue
+                # iterate over every pair of columns in ea. row
                 for i, rawResponse1 in enumerate(row):
                     for j, rawResponse2 in enumerate(row):
+                        # avoid repetitive pairs of questions (e.g., "race" and "gender" is the same as "gender" and "race")
                         if j >= i:
                             if self.questionDictionary[i].choose_multiple:
+                                # splits multiple choices into an array of strings and strips white spaces
                                 parsedResponse1 = map(
                                     lambda x: x.strip(), rawResponse1.split(",")
                                 )
@@ -146,5 +153,5 @@ for i, r in enumerate(test1):
     print(str(i) + r) """
 
 test = Poll("questions.csv", "data.csv")
-print(test.data)
+print(Poll.__doc__)
 
