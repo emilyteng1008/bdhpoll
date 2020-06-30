@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.stats import chisquare
+import scipy.stats as stats
 import csv
 
 
@@ -81,6 +81,7 @@ class Poll:
         """
         self.questionDictionary = self.parseQuestions(questionPath)
         self.data = self.parseData(dataPath)
+        self.pValue = {k: self.chiSquare(k) for k in self.data.keys()}
 
     def parseQuestions(self, questionsCSV):
         """
@@ -127,18 +128,19 @@ class Poll:
                         if j >= i:
                             if self.questionDictionary[i].choose_multiple:
                                 # split multiple choice responses into an array of strings and strip white spaces
-                                parsedResponse1 = map(
-                                    lambda x: x.strip(), rawResponse1.split(",")
+                                parsedResponse1 = list(
+                                    map(lambda x: x.strip(), rawResponse1.split(","))
                                 )
                             else:
                                 parsedResponse1 = [rawResponse1]
                             if self.questionDictionary[j].choose_multiple:
-                                parsedResponse2 = map(
-                                    lambda x: x.strip(), rawResponse2.split(",")
+                                parsedResponse2 = list(
+                                    map(lambda x: x.strip(), rawResponse2.split(","))
                                 )
                             else:
                                 parsedResponse2 = [rawResponse2]
                             # find the index of responses according to index of choices in self.questionDictionary
+
                             for choice1 in parsedResponse1:
                                 for choice2 in parsedResponse2:
                                     index1 = self.questionDictionary[i].choices[choice1]
@@ -146,15 +148,16 @@ class Poll:
                                     temp[(i, j)][index1][index2] += 1
         return temp
 
-
-""" test = Poll("testquestions.csv")
-for k, v in test.questionDictionary.items():
-    print(v.title + str(v.choose_multiple))
-
-test1 = ["FALSE", "Female", "Sophmore", "Yes"]
-for i, r in enumerate(test1):
-    print(str(i) + r) """
-
-test = Poll("questions.csv", "data.csv")
-print(Poll.__doc__)
+    def chiSquare(self, pair):
+        observed = self.data[pair]
+        expected = np.zeros(observed.shape)
+        for i in range(observed.shape[0]):
+            for j in range(observed.shape[1]):
+                expected[i][j] = observed[i, :].sum() * observed[:, j].sum()
+        expected = expected / (observed.sum())
+        chiSquare = (((observed - expected) ** 2) / expected).sum()
+        pValue = 1 - stats.chi2.cdf(
+            x=chiSquare, df=(observed.shape[0] - 1) * (observed.shape[1] - 1)
+        )
+        return pValue
 
