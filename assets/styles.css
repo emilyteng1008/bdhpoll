@@ -11,11 +11,12 @@
 }
 
 .labelX-text{
-    text-align: center
+    transform: rotate(270deg);
+    transform-origin: bottom
 }
 
 .labelX-div{
-    height: 30px;
+    height: 100px;
     width: 100px;
     float: left;
     box-sizing: border-box;
@@ -24,14 +25,12 @@
 
 .labelY-text{
     text-align: center;
-    transform-origin: center;
     margin-top: 30px;
-    transform: rotate(270deg)
 }
 
 .labelY-div{
     height: 100px;
-    width: 30px;
+    width: 100px;
     box-sizing: border-box;
     border: 1px solid black;
     float: top
@@ -39,4 +38,20 @@
 
 .labels-format{
     float: top
+}
+
+.layout-labelsCol{
+    float: left; 
+    margin-top: 100px
+
+}
+
+.layout-labelsRowHeatmap{
+    float: left;
+}
+
+.layout-heatmap{
+    background-color: thistle;
+    border: 1px solid black;
+    overflow: auto
 }
