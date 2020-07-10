@@ -6,6 +6,9 @@ import plotly.express as px
 import pandas as pd
 from heatmap import heatmapLayout
 from heatmap import colorMatrix
+from poll import Question
+from poll import Poll
+from heatmap import setLabels
 
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
@@ -13,9 +16,19 @@ external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 
-test = {(0, 0): 0.5, (0, 1): 0.04, (0, 2): 0.8, (1, 1): 0.6, (1, 2): 0.4, (2, 2): 1}
+""" test1 = {(0, 0): 0.5, (0, 1): 0.04, (0, 2): 0.8, (1, 1): 0.6, (1, 2): 0.4, (2, 2): 1}
 
-app.layout = heatmapLayout(["hello", "yo", "yo"], colorMatrix(test),)
+test = {
+    0: Question(["True", "Gender", "Gender", "Male", "Female", "Other"]),
+    1: Question(["True", "Race", "What is you Race", "White", "Black", "Asian"]),
+    2: Question(["True", "Dating App", "What is you Race", "White", "Black", "Asian"]),
+} """
+
+test = Poll("questions.csv", "data.csv")
+
+app.layout = heatmapLayout(
+    setLabels(test.questionDictionary), colorMatrix(test.pValue),
+)
 
 
 if __name__ == "__main__":

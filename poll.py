@@ -34,7 +34,7 @@ class Question:
         row: a array of strings with choose_multiple, title, text, and choices
         """
         self.choose_multiple = True if row[0].upper() == "TRUE" else False
-        self.title = row[1]
+        self.title = row[1].replace(" ", "_")
         self.text = row[2]
         self.choices = {}
         for i in range(3, len(row)):
