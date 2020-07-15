@@ -26,8 +26,27 @@ test = {
 
 test = Poll("questions.csv", "data.csv")
 
-app.layout = heatmapLayout(
-    setLabels(test.questionDictionary), colorMatrix(test.pValue),
+app.layout = html.Div(
+    children=[
+        html.Div(
+            html.H1("Spring 2020 Brown Daily Herald Poll "), className="titleLayout"
+        ),
+        html.Div(
+            children=[
+                html.Div(className="heatmapLayout"),
+                html.Div(className="barchartLayout"),
+            ],
+            className="firstRowLayout",
+        ),
+        html.Div(
+            children=[
+                html.Div(className="tableLayout"),
+                html.Div(className="piechartLayout"),
+            ],
+            className="secondRowLayout",
+        ),
+    ],
+    className="pageLayout",
 )
 
 
