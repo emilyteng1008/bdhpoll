@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import scipy.stats as stats
 import csv
 
@@ -34,7 +35,7 @@ class Question:
         row: a array of strings with choose_multiple, title, text, and choices
         """
         self.choose_multiple = True if row[0].upper() == "TRUE" else False
-        self.title = row[1].replace(" ", "_")
+        self.title = row[1]
         self.text = row[2]
         self.choices = {}
         for i in range(3, len(row)):
@@ -79,18 +80,20 @@ class Poll:
         dataPath: csv file 
             a file that stores all the poll responses 
         """
-        self.questionDictionary = self.parseQuestions(questionPath)
-        self.data = self.parseData(dataPath)
-        self.pValue = {k: self.chiSquare(k) for k in self.data.keys()}
+        """ self.questionDictionary = self.parseQuestions(questionPath) """
+        self.questionPath = questionPath
+        self.dataPath = dataPath
+        self.questionDictionary = self.getQuestionDictionary()
+        self.dataDictionary = self.getDataDictionary()
 
-    def parseQuestions(self, questionsCSV):
+    def getQuestionDictionary(self):
         """
         returns a dictionary with all the poll questions parsed 
 
         set i = -1  and if i != 1 to skip the first row of the csv file
         """
         temp = {}
-        with open(questionsCSV) as f:
+        with open(self.questionPath) as f:
             QUESTION_FILE = csv.reader(f)
             i = -1
             for row in QUESTION_FILE:
@@ -99,7 +102,7 @@ class Poll:
                 i += 1
         return temp
 
-    def parseData(self, dataCSV):
+    def getDataDictionary(self):
         """
         returns a dictionary with all the responses parsed
 
@@ -112,7 +115,7 @@ class Poll:
                 if k2 >= k1:
                     temp[(k1, k2)] = np.zeros((len(v1.choices), len(v2.choices)))
 
-        with open(dataCSV) as f:
+        with open(self.dataPath) as f:
             DATA_FILE = csv.reader(f)
             isQuestion = False
             # iterate over ea. row in the file
@@ -149,7 +152,7 @@ class Poll:
         return temp
 
     def chiSquare(self, pair):
-        observed = self.data[pair]
+        observed = self.dataDictionary[pair]
         expected = np.zeros(observed.shape)
         for i in range(observed.shape[0]):
             for j in range(observed.shape[1]):
@@ -160,4 +163,26 @@ class Poll:
             x=chiSquare, df=(observed.shape[0] - 1) * (observed.shape[1] - 1)
         )
         return pValue
+
+    def getPValues(self):
+        pValueDictionary = {k: self.chiSquare(k) for k in self.dataDictionary.keys()}
+        return pValueDictionary
+
+    def getDataFrames(self):
+        df = {k: pd.DataFrame(v) for k, v in self.dataDictionary.items()}
+        for k, v in df.items():
+            xLabel = [None] * len(self.questionDictionary[k[1]].choices)
+            yLabel = [None] * len(self.questionDictionary[k[0]].choices)
+            for choice, index in self.questionDictionary[k[1]].choices.items():
+                xLabel[index] = choice
+            for choice, index in self.questionDictionary[k[0]].choices.items():
+                yLabel[index] = choice
+            v.columns = xLabel
+            v.index = yLabel
+            v.name = (
+                self.questionDictionary[k[0]].title
+                + " vs "
+                + self.questionDictionary[k[1]].title
+            )
+        return df
 
