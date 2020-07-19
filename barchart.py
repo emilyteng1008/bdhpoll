@@ -24,12 +24,12 @@ def getBarChart(pair, dataFrameDict):
         figure={
             "data": list(traces),
             "layout": {
+                "font": {"size": 35, "family": "Arial"},
                 "title": df.name,
                 "barmode": "stack",
                 "height": 1400,
                 "width": 1400,
                 "titlefont": {"size": 50},
-                "legendfont": {"size": 35},
             },
         },
     )
