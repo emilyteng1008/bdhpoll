@@ -8,30 +8,36 @@ import numpy as np
 import pandas as pd
 from poll import Question
 from poll import Poll
+from datatable import getDataTable
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-test = Poll("questions.csv", "data.csv")
+test = Poll("testquestions.csv", "testdata_twoquestions.csv")
 
 
-def getDataTable(pair, dataFrameDict):
+def getPieChart(pair, dataFrameDict):
     df = dataFrameDict[pair]
     df.loc[:, "Total"] = df.sum(axis=1)
     df.loc["Total", :] = df.sum(axis=0, numeric_only=True)
     df = df.reset_index().rename(columns={"index": ""}, index={"": "Total"})
-
-    return dash_table.DataTable(
-        id="table",
-        columns=[{"name": i, "id": i} for i in df.columns],
-        data=df.to_dict("records"),
-        style_table={"width": "50%"},
+    values = list(df.loc[:, "Total"])
+    labels = list(df.columns)
+    fig = go.Figure(
+        data=[
+            go.Pie(
+                labels=labels[1:-1],
+                values=values,
+                textinfo="label+percent",
+                insidetextorientation="radial",
+            ),
+        ]
     )
+    return html.Div([dcc.Graph(figure=fig)],)
 
 
-app.layout = getDataTable((20, 23), test.getDataFrames())
-
+app.layout = getPieChart((0, 0), test.getDataFrames())
 
 if __name__ == "__main__":
     app.run_server(debug=True)
