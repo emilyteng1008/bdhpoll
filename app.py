@@ -4,17 +4,13 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 import pandas as pd
-from heatmap import heatmapLayout
-from heatmap import colorMatrix
-from poll import Question
-from poll import Poll
-from heatmap import setLabels
-
+import components
+from components.poll import Poll
+from components.barchart import getBarChart
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
 
 """ test1 = {(0, 0): 0.5, (0, 1): 0.04, (0, 2): 0.8, (1, 1): 0.6, (1, 2): 0.4, (2, 2): 1}
 
@@ -24,7 +20,7 @@ test = {
     2: Question(["True", "Dating App", "What is you Race", "White", "Black", "Asian"]),
 } """
 
-test = Poll("questions.csv", "data.csv")
+test = Poll("data/questions.csv", "data/data.csv")
 
 app.layout = html.Div(
     children=[

@@ -3,7 +3,6 @@ import pandas as pd
 import scipy.stats as stats
 import csv
 
-
 class Question:
     """ 
     A class that represents a question 

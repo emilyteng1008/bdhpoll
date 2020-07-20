@@ -2,8 +2,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import numpy as np
-from poll import Question
-
+from poll import Poll
 
 def setColor(pValue):
     """
@@ -147,4 +146,3 @@ def heatmapLayout(labels, colors):
         ],
         className="layout-heatmap",
     )
-

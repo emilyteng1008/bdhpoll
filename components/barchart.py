@@ -5,13 +5,12 @@ import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
 import pandas as pd
-from poll import Question
-from poll import Poll
+from poll import Poll, Question
+
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
 
 def getBarChart(pair, dataFrameDict):
     df = dataFrameDict[pair]
@@ -19,7 +18,7 @@ def getBarChart(pair, dataFrameDict):
         lambda choice: go.Bar(x=df.index, y=df[choice], name=str(choice)),
         list(df.columns),
     )
-    barchart = dcc.Graph(
+    return dcc.Graph(
         id=df.name,
         figure={
             "data": list(traces),
@@ -33,13 +32,10 @@ def getBarChart(pair, dataFrameDict):
             },
         },
     )
-    return barchart
 
-
-test = Poll("questions.csv", "data.csv")
+test = Poll("data/questions.csv", "data/data.csv")
 
 app.layout = html.Div(children=[getBarChart((10, 20), test.getDataFrames())])
-
 
 if __name__ == "__main__":
     app.run_server(debug=True)
