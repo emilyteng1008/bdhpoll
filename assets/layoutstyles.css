@@ -1,0 +1,47 @@
+.titleLayout{
+    height: 5%
+}
+
+
+.heatmapLayout{
+    background-color: pink;
+    flex: 60%;
+}
+
+.barchartLayout{
+    background-color: purple;
+    flex: 40%
+}
+
+.firstRowLayout{
+    height: 55%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.tableLayout{
+    background-color: thistle;
+    flex: 60%
+}
+
+.piechartLayout{
+    background-color: red;
+    flex: 40%;
+}
+
+.secondRowLayout{
+    height: 40%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.pageLayout{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: beige;
+}
