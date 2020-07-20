@@ -16,8 +16,6 @@ Run `cd bdhpoll`
 
 Run `python app.py`
 
-penis
-
 # Structure
 
 The directory structure is:
