@@ -1,0 +1,67 @@
+.coloredbox {
+    text-align: center;
+    float: left;
+    box-sizing: border-box;
+    border: 1px solid white;
+    height: 50px;
+    width: 50px
+}
+
+.boxRow{
+    float: top
+
+}
+
+.labelX-text{
+    transform: rotate(270deg);
+    margin-top: 300px;
+    font-weight: bold
+}
+
+.labelX-div{
+    height: 350px;
+    width: 50px;
+    float: left
+}
+
+.labelY-text{
+    text-align: right;
+    margin-right: 5px;
+    margin-top: 15px;
+    font-weight: bold
+}
+
+.labelY-div{
+    height: 50px;
+    width: 200px;
+    box-sizing: border-box;
+    border: 1px solid white;
+    float: top
+}
+
+.labels-format{
+    float: top
+}
+
+.layout-labelsCol{
+    float: left; 
+    margin-top: 340px;
+
+}
+
+.layout-labelsRowHeatmap{
+    float: left;
+}
+
+.layout-heatmap{
+    background-color: white;
+    overflow: auto;
+    width:50%;
+    flex: 50%;
+    
+}
+
+.test{
+    flex: 30%;
+    background-color: teal
+}

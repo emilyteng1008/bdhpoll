@@ -1,2 +1,9 @@
 .DS_Store
 components/__pycache__/
+__pycache__/
+testdata_onequestion.csv
+testdata_twoquestions.csv
+testquestions_twoquestions.csv
+testquestions.csv
+testquestions.numbers
+data.numbers
