@@ -3,6 +3,7 @@ import pandas as pd
 import scipy.stats as stats
 import csv
 
+
 class Question:
     """ 
     A class that represents a question 
@@ -182,6 +183,11 @@ class Poll:
                 self.questionDictionary[k[0]].title
                 + " vs "
                 + self.questionDictionary[k[1]].title
+            )
+            v.nameTranspose = (
+                self.questionDictionary[k[1]].title
+                + " vs "
+                + self.questionDictionary[k[0]].title
             )
         return df
 

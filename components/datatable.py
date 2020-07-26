@@ -14,17 +14,23 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 test = Poll("data/questions.csv", "data/data.csv")
 
+
 def getDataTable(pair, dataFrameDict):
     df = dataFrameDict[pair]
     df.loc[:, "Total"] = df.sum(axis=1)
     df.loc["Total", :] = df.sum(axis=0, numeric_only=True)
     df = df.reset_index().rename(columns={"index": ""}, index={"": "Total"})
+    dfTranspose = df.transpose()
 
-    return dash_table.DataTable(
-        id="table",
-        columns=[{"name": i, "id": i} for i in df.columns],
-        data=df.to_dict("records"),
-        style_table={"width": "50%"},
+    return html.Div(
+        children=[
+            dash_table.DataTable(
+                id="table",
+                columns=[{"name": i, "id": i} for i in df.columns],
+                data=df.to_dict("records"),
+                style_table={"width": "50%"},
+            )
+        ]
     )
 
 

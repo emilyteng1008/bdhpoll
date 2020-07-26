@@ -1,8 +1,17 @@
 import dash
 import dash_core_components as dcc
+import dash_table
 import dash_html_components as html
+import plotly.graph_objects as go
+import plotly.express as px
 import numpy as np
-from poll import Poll
+import pandas as pd
+from poll import Poll, Question
+
+external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
+
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
 
 def setColor(pValue):
     """
@@ -146,3 +155,23 @@ def heatmapLayout(labels, colors):
         ],
         className="layout-heatmap",
     )
+
+
+def getPValueMatrix(pValueDict, questionDict):
+    pValues = np.full((len(pValueDict), len(pValueDict)), np.nan)
+    Label = [None] * len(questionDict)
+    for k, v in questionDict.items():
+        Label[k] = v.title
+    for k, v in pValueDict.items():
+        pValues[k[0]][k[1]] = v
+    fig = go.Figure(data=go.Heatmap(z=pValues, x=Label, y=Label))
+    fig.update_layout(height=1500, width=1500)
+    return html.Div(children=[dcc.Graph(figure=fig)])
+
+
+test = Poll("data/questions.csv", "data/data.csv")
+
+app.layout = getPValueMatrix(test.getPValues(), test.getQuestionDictionary())
+
+if __name__ == "__main__":
+    app.run_server(debug=True)

@@ -4,7 +4,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 import pandas as pd
-import components
 from components.poll import Poll
 from components.barchart import getBarChart
 
@@ -19,7 +18,6 @@ test = {
     1: Question(["True", "Race", "What is you Race", "White", "Black", "Asian"]),
     2: Question(["True", "Dating App", "What is you Race", "White", "Black", "Asian"]),
 } """
-
 test = Poll("data/questions.csv", "data/data.csv")
 
 app.layout = html.Div(
