@@ -22,40 +22,42 @@ def getPieChart(pair, dataFrameDict):
     df = df.reset_index().rename(columns={"index": ""}, index={"": "Total"})
     values1 = list(df.iloc[-1])
     labels1 = list(df.columns)
-    print(values1)
-    print(df)
-    fig1 = go.Figure(
-        data=[
-            go.Pie(
-                labels=labels1[1:-1],
-                values=values1[1:-1],
-                textinfo="label+percent",
-                insidetextorientation="radial",
-            ),
-        ]
-    )
+    fig1 = go.Figure(data=[go.Pie(labels=labels1[1:-1], values=values1[1:-1],),])
 
     values2 = list(df["Total"])
     labels2 = list(df.iloc[:, 0])
-    print(labels2)
-    print(values2)
-    fig2 = go.Figure(
-        data=[
-            go.Pie(
-                labels=labels2,
-                values=values2[:-1],
-                textinfo="label+percent",
-                insidetextorientation="radial",
-            ),
-        ]
+    fig2 = go.Figure(data=[go.Pie(labels=labels2, values=values2[:-1],),])
+    fig1.update_layout(
+        showlegend=False,
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        width=600,
+        height=600,
     )
-    fig1.update_layout(showlegend=False)
-    fig2.update_layout(showlegend=False)
+    fig2.update_layout(
+        showlegend=False,
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        width=600,
+        height=600,
+    )
     return html.Div(
         children=[
-            html.Div(children=[dcc.Graph(figure=fig1)]),
-            html.Div(children=[dcc.Graph(figure=fig2)]),
+            html.Div(
+                children=[dcc.Graph(figure=fig2)],
+                style={
+                    "flex": "50%",
+                    "width": "50%",
+                    "height": "100ox",
+                    "margin-right": "20px",
+                },
+            ),
+            html.Div(
+                children=[dcc.Graph(figure=fig1)],
+                style={"flex": "50%", "width": "50%", "height": "100px"},
+            ),
         ],
+        style={"display": "flex"},
     )
 
 

@@ -28,7 +28,18 @@ def getDataTable(pair, dataFrameDict):
                 id="table",
                 columns=[{"name": i, "id": i} for i in df.columns],
                 data=df.to_dict("records"),
-                style_table={"width": "50%"},
+                style_table={"width": "100%", "height": "300px", "overflowY": "auto",},
+                style_header={
+                    "backgroundColor": "rgba(0, 0, 0, 0)",
+                    "fontWeight": "bold",
+                    "whiteSpace": "normal",
+                    "height": "auto",
+                },
+                style_cell={
+                    "backgroundColor": "rgba(0, 0, 0, 0)",
+                    "padding": "5px",
+                    "textAlign": "center",
+                },
             )
         ]
     )

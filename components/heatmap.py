@@ -165,7 +165,12 @@ def getPValueMatrix(pValueDict, questionDict):
     for k, v in pValueDict.items():
         pValues[k[0]][k[1]] = v
     fig = go.Figure(data=go.Heatmap(z=pValues, x=Label, y=Label))
-    fig.update_layout(height=1500, width=1500)
+    fig.update_layout(
+        height=1450,
+        width=1300,
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+    )
     return html.Div(children=[dcc.Graph(figure=fig)])
 
 

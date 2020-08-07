@@ -6,6 +6,9 @@ import plotly.express as px
 import pandas as pd
 from components.poll import Poll
 from components.barchart import getBarChart
+from components.heatmap import getPValueMatrix
+from components.datatable import getDataTable
+from components.piechart import getPieChart
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
@@ -27,17 +30,29 @@ app.layout = html.Div(
         ),
         html.Div(
             children=[
-                html.Div(className="heatmapLayout"),
-                html.Div(className="barchartLayout"),
+                html.Div(
+                    children=[
+                        getPValueMatrix(test.getPValues(), test.getQuestionDictionary())
+                    ],
+                    style={"flex": "50%"},
+                ),
+                html.Div(
+                    children=[
+                        html.Div(
+                            children=[getBarChart((10, 17), test.getDataFrames())],
+                        ),
+                        html.Div(
+                            children=[getPieChart((10, 17), test.getDataFrames())],
+                            style={"margin-top": "-150px"},
+                        ),
+                        html.Div(
+                            children=[getDataTable((10, 17), test.getDataFrames())],
+                        ),
+                    ],
+                    style={"flex": "50%"},
+                ),
             ],
             className="firstRowLayout",
-        ),
-        html.Div(
-            children=[
-                html.Div(className="tableLayout"),
-                html.Div(className="piechartLayout"),
-            ],
-            className="secondRowLayout",
         ),
     ],
     className="pageLayout",

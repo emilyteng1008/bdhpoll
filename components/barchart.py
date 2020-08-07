@@ -19,7 +19,6 @@ def getBarChart(pair, dataFrameDict):
         lambda choice: go.Bar(x=df.index, y=df[choice], name=str(choice)),
         list(df.columns),
     )
-    print(df.name)
     dfTranspose = df.transpose()
     tracesTranspose = map(
         lambda choice: go.Bar(
@@ -36,13 +35,16 @@ def getBarChart(pair, dataFrameDict):
                         figure={
                             "data": list(traces),
                             "layout": {
-                                "font": {"size": 35, "family": "Arial"},
+                                "font": {"size": 15, "family": "Arial"},
                                 "title": df.name,
                                 "barmode": "stack",
-                                "height": 1400,
-                                "width": 1400,
-                                "titlefont": {"size": 50},
+                                "height": 800,
+                                "width": "50%",
+                                "titlefont": {"size": 25},
                                 "margin": {"b": 250},
+                                "paper_bgcolor": "rgba(0, 0, 0, 0)",
+                                "plot_bgcolor": "rgba(0, 0, 0, 0)",
+                                "legend": {"size": "10"},
                             },
                         },
                     )
@@ -56,13 +58,16 @@ def getBarChart(pair, dataFrameDict):
                         figure={
                             "data": list(tracesTranspose),
                             "layout": {
-                                "font": {"size": 35, "family": "Arial"},
+                                "font": {"size": 15, "family": "Arial"},
                                 "title": df.nameTranspose,
                                 "barmode": "stack",
-                                "height": 1400,
-                                "width": 1400,
-                                "titlefont": {"size": 50},
+                                "height": 800,
+                                "width": "50%",
+                                "titlefont": {"size": 25},
                                 "margin": {"b": 250},
+                                "paper_bgcolor": "rgba(0, 0, 0, 0)",
+                                "plot_bgcolor": "rgba(0, 0, 0, 0)",
+                                "legend": {"size": "10"},
                             },
                         },
                     )
