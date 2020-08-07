@@ -45,14 +45,6 @@ class Question:
                 self.choices[row[i].strip()] = i - 3
 
 
-""" test_row = ["True", "Gender", "Gender", "Male", "Female", "Other"]
-test = Question(test_row)
-print(test.choose_multiple)
-print(test.choices)
-print(test.title)
-print(test.text) """
-
-
 class Poll:
     """
     A class that represents all the questions and data  

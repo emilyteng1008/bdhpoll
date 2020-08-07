@@ -14,14 +14,24 @@ external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-""" test1 = {(0, 0): 0.5, (0, 1): 0.04, (0, 2): 0.8, (1, 1): 0.6, (1, 2): 0.4, (2, 2): 1}
-
-test = {
-    0: Question(["True", "Gender", "Gender", "Male", "Female", "Other"]),
-    1: Question(["True", "Race", "What is you Race", "White", "Black", "Asian"]),
-    2: Question(["True", "Dating App", "What is you Race", "White", "Black", "Asian"]),
-} """
 test = Poll("data/questions.csv", "data/data.csv")
+
+
+def getDropDownLabels(questionDict):
+    options = []
+    for k, v in questionDict.items():
+        label = {"label": v.title, "value": k}
+        options.append(label)
+    return options
+
+
+@app.callback(
+    Input('')
+)
+
+def updateGraphs()
+
+
 
 app.layout = html.Div(
     children=[
@@ -38,6 +48,29 @@ app.layout = html.Div(
                 ),
                 html.Div(
                     children=[
+                        html.Div(
+                            children=[
+                                dcc.Dropdown(
+                                    id="xAxisLabels",
+                                    options=getDropDownLabels(
+                                        test.getQuestionDictionary()
+                                    ),
+                                    style=dict(
+                                        width="40%", verticalAlign="middle", flex="50%"
+                                    ),
+                                ),
+                                dcc.Dropdown(
+                                    id="yAxisLabels",
+                                    options=getDropDownLabels(
+                                        test.getQuestionDictionary()
+                                    ),
+                                    style=dict(
+                                        width="40%", verticalAlign="middle", flex="50%"
+                                    ),
+                                ),
+                            ],
+                            style={"display": "flex"},
+                        ),
                         html.Div(
                             children=[getBarChart((10, 17), test.getDataFrames())],
                         ),

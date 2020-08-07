@@ -6,13 +6,6 @@ import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
 import pandas as pd
-from poll import Poll, Question
-
-external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
-
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
-test = Poll("data/questions.csv", "data/data.csv")
 
 
 def getPieChart(pair, dataFrameDict):
@@ -60,8 +53,3 @@ def getPieChart(pair, dataFrameDict):
         style={"display": "flex"},
     )
 
-
-app.layout = getPieChart((0, 10), test.getDataFrames())
-
-if __name__ == "__main__":
-    app.run_server(debug=True)
