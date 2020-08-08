@@ -72,7 +72,6 @@ class Poll:
         dataPath: csv file 
             a file that stores all the poll responses 
         """
-        """ self.questionDictionary = self.parseQuestions(questionPath) """
         self.questionPath = questionPath
         self.dataPath = dataPath
         self.questionDictionary = self.getQuestionDictionary()
@@ -144,7 +143,16 @@ class Poll:
         return temp
 
     def chiSquare(self, pair):
+        """
+        Parameters
+        ----------
+        pair: a tuple of int that are the corresponding id to ea. question 
+
+        returns a float (pValue of two question responses)
+        """
+        # find the corresponding matrix from dataDictionary
         observed = self.dataDictionary[pair]
+        # set an empty matrix that is the same dimensions as the corresponding matrix from dataDictionary
         expected = np.zeros(observed.shape)
         for i in range(observed.shape[0]):
             for j in range(observed.shape[1]):
@@ -157,10 +165,16 @@ class Poll:
         return pValue
 
     def getPValues(self):
+        """
+        returns a dictionary, where the keys are tuples (pairs of question ids) and values are floats (p values)
+        """
         pValueDictionary = {k: self.chiSquare(k) for k in self.dataDictionary.keys()}
         return pValueDictionary
 
     def getDataFrames(self):
+        """
+        returns a dictionary where the keys are tuples (pairs of question ids) and values are dataframes 
+        """
         df = {k: pd.DataFrame(v) for k, v in self.dataDictionary.items()}
         for k, v in df.items():
             xLabel = [None] * len(self.questionDictionary[k[1]].choices)

@@ -9,6 +9,16 @@ import pandas as pd
 
 
 def getPValueMatrix(pValueDict, questionDict):
+    """
+    returns a heatmap where x, y labels are questions 
+
+    Parameters
+    ----------
+    
+    pValueDict: a dictionary of pValues where keys are questions pairs
+    questionDict: a dictionary, where keys are ints(question id) and values are question classes 
+    """
+
     pValues = np.full((len(pValueDict), len(pValueDict)), np.nan)
     Label = [None] * len(questionDict)
     for k, v in questionDict.items():
@@ -22,4 +32,4 @@ def getPValueMatrix(pValueDict, questionDict):
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
     )
-    return html.Div(children=[dcc.Graph(figure=fig)])
+    return dcc.Graph(figure=fig)

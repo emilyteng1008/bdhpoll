@@ -2,6 +2,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
 from components.poll import Poll
@@ -9,6 +10,7 @@ from components.barchart import getBarChart
 from components.heatmap import getPValueMatrix
 from components.datatable import getDataTable
 from components.piechart import getPieChart
+
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
@@ -23,14 +25,6 @@ def getDropDownLabels(questionDict):
         label = {"label": v.title, "value": k}
         options.append(label)
     return options
-
-
-@app.callback(
-    Input('')
-)
-
-def updateGraphs()
-
 
 
 app.layout = html.Div(
@@ -72,14 +66,17 @@ app.layout = html.Div(
                             style={"display": "flex"},
                         ),
                         html.Div(
+                            id="barchartDiv",
                             children=[getBarChart((10, 17), test.getDataFrames())],
                         ),
                         html.Div(
+                            id="piechartDiv",
                             children=[getPieChart((10, 17), test.getDataFrames())],
                             style={"margin-top": "-150px"},
                         ),
                         html.Div(
-                            children=[getDataTable((10, 17), test.getDataFrames())],
+                            id="tableDiv",
+                            children=[getDataTable((0, 0), test.getDataFrames())],
                         ),
                     ],
                     style={"flex": "50%"},
@@ -90,6 +87,31 @@ app.layout = html.Div(
     ],
     className="pageLayout",
 )
+
+
+@app.callback(
+    [
+        Output("tableDiv", "children"),
+        Output("barchartDiv", "children"),
+        Output("piechartDiv", "children"),
+    ],
+    [Input("xAxisLabels", "value"), Input("yAxisLabels", "value")],
+)
+def update_graphs(xAxisLabels, yAxisLabels):
+    if xAxisLabels == None or yAxisLabels == None:
+        datatable = getDataTable((0, 0), test.getDataFrames())
+        barchart = getBarChart((0, 0), test.getDataFrames())
+        piechart = getPieChart((0, 0), test.getDataFrames())
+    elif xAxisLabels > yAxisLabels:
+        datatable = getDataTable((yAxisLabels, xAxisLabels), test.getDataFrames())
+        barchart = getBarChart((yAxisLabels, xAxisLabels), test.getDataFrames())
+        piechart = getPieChart((yAxisLabels, xAxisLabels), test.getDataFrames())
+    else:
+        datatable = getDataTable((xAxisLabels, yAxisLabels), test.getDataFrames())
+        barchart = getBarChart((xAxisLabels, yAxisLabels), test.getDataFrames())
+        piechart = getPieChart((xAxisLabels, yAxisLabels), test.getDataFrames())
+
+    return datatable, barchart, piechart
 
 
 if __name__ == "__main__":

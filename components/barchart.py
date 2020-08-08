@@ -8,6 +8,14 @@ import pandas as pd
 
 
 def getBarChart(pair, dataFrameDict):
+    """
+    returns an html div with pair of bar charts 
+    
+    Paramters 
+    ---------
+    pair: a tuple of ints(pair of question ids)
+    dataFrameDict: a dictionary where keys are pairs of question ids, and values are dataframes
+    """
     df = dataFrameDict[pair]
     traces = map(
         lambda choice: go.Bar(x=df.index, y=df[choice], name=str(choice)),
